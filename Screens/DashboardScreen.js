@@ -13,17 +13,17 @@ const DashboardScreen = () => {
   export default DashboardScreen;
   */
 
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const DashboardScreen = () => {
   const [data, setData] = useState([]);
+  const refreshTimer = useRef(null);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    //fetchData();
 
     const fetchData = async () => {
       try {
@@ -40,17 +40,82 @@ const DashboardScreen = () => {
       }
     };
 
+    const startRefreshTimer = () => {
+      refreshTimer.current = setInterval(fetchData, 600000);
+    };
+
+    const clearRefreshTimer = () => {
+      clearInterval(refreshTimer.current);
+    };
+
+    fetchData();
+    startRefreshTimer();
+
+    return () => {
+      clearRefreshTimer();
+    };
+
+  }, []);
+
+  /*
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'x-api-key': 'Secret',
+          },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  */
     const handleRefresh = () => {
+        clearInterval(refreshTimer.current);
+
         fetchData();
+
+        refreshTimer.current = setInterval(fetchData, 600000);
     };
     
 
+    const fetchData = async () => {
+      try {
+        const token = await AsyncStorage.getItem('token');
+        const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'x-api-key': 'Secret',
+          },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+
   return (
+    /*
     <View style = {styles.container}>
         <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
             <Text style={styles.buttonText}>Refresh</Text>
         </TouchableOpacity>
+    */
+      <View style = {styles.container}>
+        <TouchableHighlight 
+        style={styles.refreshButton}
+        activeOpacity={0.6}
+        underlayColor="#DDDDDD"
+        onPress={handleRefresh}
+        >
 
+            <Text style={styles.buttonText}>Refresh</Text>
+
+        </TouchableHighlight>
 
       {data.map((item) => (
         <View style = {styles.item} key = {item.id}>
