@@ -15,8 +15,7 @@ const DashboardScreen = () => {
 
 import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import api from '../api/api';//
 
 const DashboardScreen = () => {
   const [data, setData] = useState([]);
@@ -24,9 +23,10 @@ const DashboardScreen = () => {
 
   useEffect(() => {
     //fetchData();
-
+    
     const fetchData = async () => {
       try {
+        /*
         const token = await AsyncStorage.getItem('token');
         const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
           headers: {
@@ -34,14 +34,21 @@ const DashboardScreen = () => {
             'x-api-key': 'Secret',
           },
         });
+        */
+
+        //const api = setupInterceptor();//
+        const response = await api.get('/GasAPI'); //
+        //console.log(response.data);
         setData(response.data);
+        
       } catch (error) {
         console.error(error);
       }
     };
+    
 
     const startRefreshTimer = () => {
-      refreshTimer.current = setInterval(fetchData, 600000);
+      refreshTimer.current = setInterval(fetchData, 600000);//
     };
 
     const clearRefreshTimer = () => {
@@ -78,12 +85,13 @@ const DashboardScreen = () => {
 
         fetchData();
 
-        refreshTimer.current = setInterval(fetchData, 600000);
+        refreshTimer.current = setInterval(fetchData, 600000);//
     };
     
 
     const fetchData = async () => {
       try {
+        /*
         const token = await AsyncStorage.getItem('token');
         const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
           headers: {
@@ -91,6 +99,10 @@ const DashboardScreen = () => {
             'x-api-key': 'Secret',
           },
         });
+        */
+        //const api = setupInterceptor();//
+        const response = await api.get('/GasAPI'); //
+        //console.log(response.data);
         setData(response.data);
       } catch (error) {
         console.error(error);

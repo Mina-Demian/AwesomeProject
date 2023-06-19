@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
+import storage from '../storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
@@ -29,8 +30,15 @@ const LoginScreen = () => {
 
         console.log(data);
         // Store the token and refreshToken in AsyncStorage or other storage mechanism
-        await AsyncStorage.setItem('token', token);
-        await AsyncStorage.setItem('refreshToken', refreshToken);
+        await storage.setItem('token', token);
+        await storage.setItem('refreshToken', refreshToken);
+        
+        const tokenCheck = await storage.getItem('token');
+        const refreshTokenCheck = await storage.getItem('refreshToken');
+        console.log(tokenCheck);
+        console.log(refreshTokenCheck);
+        
+
         // Redirect the user to the dashboard screen
         navigation.navigate('Dashboard');
       } else {
