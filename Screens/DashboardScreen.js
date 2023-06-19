@@ -28,7 +28,7 @@ const DashboardScreen = () => {
       try {
         /*
         const token = await AsyncStorage.getItem('token');
-        const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
+        const response = await axios.get('apiGetURL', {
           headers: {
             Authorization: `Bearer ${token}`,
             'x-api-key': 'Secret',
@@ -68,7 +68,7 @@ const DashboardScreen = () => {
     const fetchData = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
+        const response = await axios.get('apiGetURL', {
           headers: {
             Authorization: `Bearer ${token}`,
             'x-api-key': 'Secret',
@@ -93,7 +93,7 @@ const DashboardScreen = () => {
       try {
         /*
         const token = await AsyncStorage.getItem('token');
-        const response = await axios.get('http://192.168.2.17:5292/api/GasAPI', {
+        const response = await axios.get('apiGetURL', {
           headers: {
             Authorization: `Bearer ${token}`,
             'x-api-key': 'Secret',
