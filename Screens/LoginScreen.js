@@ -41,7 +41,7 @@ const LoginScreen = () => {
         const data = response.data;
         const { token, refreshToken } = data;
         console.log(data);
-        // Store the token and refreshToken in AsyncStorage or other storage mechanism
+
         await storage.setItem('token', token);
         await storage.setItem('refreshToken', refreshToken);
         
@@ -51,7 +51,6 @@ const LoginScreen = () => {
         console.log(refreshTokenCheck);
         
 
-        // Redirect the user to the dashboard screen
         navigation.navigate('Dashboard');
       } else {
         Alert.alert('Error', 'Invalid username or password');

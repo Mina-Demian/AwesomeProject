@@ -17,12 +17,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 //import api from '../api/api';//
 import apiInterceptor from '../api/interceptor';
+
 const DashboardScreen = () => {
   const [data, setData] = useState([]);
   const refreshTimer = useRef(null);
 
   useEffect(() => {
-    //useApiInterceptor();
     //fetchData();
   
     const fetchData = async () => {
@@ -37,9 +37,8 @@ const DashboardScreen = () => {
         });
         */
 
-        //const api = setupInterceptor();//
         const api = await apiInterceptor();
-        const response = await api.get('/GasAPI'); //api.get('/GasAPI'); //
+        const response = await api.get('/GasAPI');
         //console.log(response.data);
         setData(response.data);
         
@@ -82,6 +81,7 @@ const DashboardScreen = () => {
       }
     };
   */
+
     const handleRefresh = async () => {
         clearInterval(refreshTimer.current);
 
@@ -102,9 +102,9 @@ const DashboardScreen = () => {
           },
         });
         */
-        //const api = setupInterceptor();//
+
         const api = await apiInterceptor();
-        const response = await api.get('/GasAPI') //api.get('/GasAPI'); //
+        const response = await api.get('/GasAPI')
         //console.log(response.data);
         setData(response.data);
       } catch (error) {
@@ -139,7 +139,7 @@ const DashboardScreen = () => {
           <Text style = {styles.text}>Number of Pumps: {item.number_of_Pumps}</Text>
           <Text style = {styles.text}>Price: {item.price}</Text>
           <Text style = {styles.text}>Purity: {item.purity}</Text>
-          {/* Render other properties as needed */}
+          {}
         </View>
       ))}
     </View>
