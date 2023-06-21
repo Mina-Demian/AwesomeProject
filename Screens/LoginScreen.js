@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
 import storage from '../storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import apiInterceptor from '../api/interceptor';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -12,6 +13,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
+      /*
       const response = await fetch('http://192.168.2.17:5292/api/AuthToken/Login', {
         method: 'POST',
         headers: {
@@ -27,7 +29,17 @@ const LoginScreen = () => {
       if (response.ok) {
         const data = await response.json();
         const { token, refreshToken } = data;
+*/
+      const api = await apiInterceptor();
 
+      const response = await api.post('http://192.168.2.17:5292/api/AuthToken/Login', {
+        username,
+        password,
+      });
+
+      if (response.status === 200) {
+        const data = response.data;
+        const { token, refreshToken } = data;
         console.log(data);
         // Store the token and refreshToken in AsyncStorage or other storage mechanism
         await storage.setItem('token', token);

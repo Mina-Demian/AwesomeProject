@@ -15,15 +15,16 @@ const DashboardScreen = () => {
 
 import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import api from '../api/api';//
-
+//import api from '../api/api';//
+import apiInterceptor from '../api/interceptor';
 const DashboardScreen = () => {
   const [data, setData] = useState([]);
   const refreshTimer = useRef(null);
 
   useEffect(() => {
+    //useApiInterceptor();
     //fetchData();
-    
+  
     const fetchData = async () => {
       try {
         /*
@@ -37,7 +38,8 @@ const DashboardScreen = () => {
         */
 
         //const api = setupInterceptor();//
-        const response = await api.get('/GasAPI'); //
+        const api = await apiInterceptor();
+        const response = await api.get('/GasAPI'); //api.get('/GasAPI'); //
         //console.log(response.data);
         setData(response.data);
         
@@ -48,7 +50,7 @@ const DashboardScreen = () => {
     
 
     const startRefreshTimer = () => {
-      refreshTimer.current = setInterval(fetchData, 600000);//
+      refreshTimer.current = setInterval(fetchData, 180000);//
     };
 
     const clearRefreshTimer = () => {
@@ -80,12 +82,12 @@ const DashboardScreen = () => {
       }
     };
   */
-    const handleRefresh = () => {
+    const handleRefresh = async () => {
         clearInterval(refreshTimer.current);
 
-        fetchData();
+        await fetchData();
 
-        refreshTimer.current = setInterval(fetchData, 600000);//
+        refreshTimer.current = setInterval(fetchData, 180000);//
     };
     
 
@@ -101,7 +103,8 @@ const DashboardScreen = () => {
         });
         */
         //const api = setupInterceptor();//
-        const response = await api.get('/GasAPI'); //
+        const api = await apiInterceptor();
+        const response = await api.get('/GasAPI') //api.get('/GasAPI'); //
         //console.log(response.data);
         setData(response.data);
       } catch (error) {
